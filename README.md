@@ -5,11 +5,17 @@ In this project, my team built a SQL script to integrate four different SQL data
 
 The following stored procedures are used:
 createOutputTables - creates temporary tables for partial and merged output
+
 showRows - prints tables to console
+
 createSubqueries - checks if token has is a keyword or has a local mapping and appends token/mapping to subquery string
+
 getNextTokenAndDelim - gets next token and delimiter (punctuation) in subquery string
+
 outputLocalMappings - retrieves local mapping from metadata table
+
 checkNull - checks if local mapping is null and casts to varchar if so (to avoid zero-length column error)
+
 checkNum - casts numerical datatyppes to varchar so that columns can be merged using UNION
 
 First, the tables for each local database are created and data (such as the titles of books/CDs in the store inventory, or customer contact information) is inserted. Next the keys table, which contains various SQL keywords, is created. Then the metadata table is created - it contains mappings for all of the local databases. For example, each local database has a table for customer information containing a column for the customer name. However, this column has different names in the various databases. The metadata table contains the global column name 'Customer_Name', which maps to 'CNAME' in Database 1, 'NAME_C' in Database 2, 'NAME' in Database 3, and so on. In an anonymous PL/SQL block, the global input queries are created and the stored producedure createOutputTables is called. This procedure uses the various other procedures to output subqueries and temporary tables containing the results of the subqueries from the local databases.
